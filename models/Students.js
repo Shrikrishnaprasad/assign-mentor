@@ -14,6 +14,9 @@ const StudentsSchema = mongoose.Schema({
     type: String,
     ref: "MentorId",
   },
+  mentorName: {
+    type: String,
+  },
   isMentorAssigned: {
     type: Boolean,
     default: false,

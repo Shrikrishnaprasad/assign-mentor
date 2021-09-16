@@ -51,6 +51,8 @@ router.post("/changeMentor/:id", async (req, res) => {
   try {
     const oldStudent = await Students.findOne({ _id: studentId });
     const oldMentor = await Mentor.findOne({ _id: oldStudent.mentorId });
+    const newMentor = await Mentor.findOne({ _id: newMentorId });
+
     const rmvdOldStdId = oldMentor.studentsAssigned.filter(
       (stdid) => stdid !== studentId
     );
@@ -62,7 +64,7 @@ router.post("/changeMentor/:id", async (req, res) => {
     );
     const updStudent = await Students.findByIdAndUpdate(
       { _id: studentId },
-      { mentorId: newMentorId },
+      { mentorId: newMentorId, mentorName: newMentor.name },
       { new: true }
     );
     const updMentor = await Mentor.findByIdAndUpdate(
@@ -70,7 +72,7 @@ router.post("/changeMentor/:id", async (req, res) => {
       { $addToSet: { studentsAssigned: studentId } },
       { new: true }
     );
-    res.status(201).json(updStudent);
+    res.status(201).json("Mentor changed successfully");
   } catch (err) {
     res.status(500).json(err);
   }

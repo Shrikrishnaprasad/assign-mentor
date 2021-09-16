@@ -12,6 +12,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// get a student by id
+router.get("/get/:id", async (req, res) => {
+  const studentId = req.params.id;
+  try {
+    const student = await Students.findOne({ _id: studentId });
+    res.status(200).json(student);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 //getAll students are assigned by mentor
 router.get("/isAssigned", async (req, res) => {
   try {

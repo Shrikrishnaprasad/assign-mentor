@@ -27,9 +27,6 @@ router.post("/assignStudents/:id", async (req, res) => {
   const mentorId = req.params.id;
   const students = req.body.students;
   try {
-    const mentor = await Mentor.findOne({ _id: req.params.id });
-    //const oldStdId = mentor.studentsAssigned.map(stdId => stdId)
-
     const updStudents = students.map(async (student) => {
       await Mentor.findByIdAndUpdate(
         { _id: mentorId },
